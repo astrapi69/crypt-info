@@ -1,0 +1,10 @@
+# profile
+# for enable flyway
+# and disables hibernate generation of the database
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+    baseline-on-migrate: true

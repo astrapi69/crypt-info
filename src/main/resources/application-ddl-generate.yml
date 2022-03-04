@@ -1,0 +1,11 @@
+# profile
+# for let hibernate generate for you the database
+# and disables flyway
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+  flyway:
+    enabled: false
+    baseline-on-migrate: true
+

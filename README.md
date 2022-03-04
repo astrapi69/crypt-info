@@ -1,3 +1,3 @@
-# spring-boot-template
+# crypt-info
 
-template project for start with spring-boot project
+This repository holds the data for the mystic-crypt-ui

@@ -1,13 +1,9 @@
 #
 spring:
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:cryptinfo.db
   application:
     admin:
       enabled: false
       jmx-name: org.springframework.boot:type=Admin,name=SpringBootApplicationRunner
-
-app:
-  db-name: cryptinfo
-  db-host: localhost
-  db-port: 5432
-  db-username: postgres
-  db-password: postgres

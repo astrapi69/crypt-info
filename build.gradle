@@ -225,6 +225,7 @@ dependencies {
     implementation("io.springfox:springfox-swagger2:$springfoxSwaggerVersion")
     implementation("io.springfox:springfox-swagger-ui:$springfoxSwaggerVersion")
     implementation("com.thoughtworks.xstream:xstream:$xstreamVersion")
+    implementation("org.xerial:sqlite-jdbc:3.28.0")
     implementation("org.postgresql:postgresql")
     implementation("org.flywaydb:flyway-core")
     implementation("org.springframework:spring-oxm")
