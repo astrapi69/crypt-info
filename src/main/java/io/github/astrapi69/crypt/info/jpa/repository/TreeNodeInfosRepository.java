@@ -35,7 +35,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface TreeNodesRepository extends JpaRepository<TreeNodeInfos, UUID>
+public interface TreeNodeInfosRepository extends JpaRepository<TreeNodeInfos, UUID>
 {
 
 	List<TreeNodeInfos> findByValue(String value);
@@ -64,21 +64,21 @@ public interface TreeNodesRepository extends JpaRepository<TreeNodeInfos, UUID>
 		@Param("node") boolean node);
 
 	@Query(value = "WITH RECURSIVE ancestors(id, parent_id, value, level) AS ("
-		+ " SELECT pkp.id, pkp.parent_id, pkp.value, 1 AS level " + " FROM tree_nodes pkp "
+		+ " SELECT pkp.id, pkp.parent_id, pkp.value, 1 AS level " + " FROM tree_node_infos pkp "
 		+ " WHERE pkp.id = :treeId " + " UNION ALL "
 		+ " SELECT parent.id, parent.parent_id, parent.value, child.level + 1 AS level "
-		+ " FROM tree_nodes parent " + " JOIN ancestors child " + " ON parent.id = child.parent_id "
+		+ " FROM tree_node_infos parent " + " JOIN ancestors child " + " ON parent.id = child.parent_id "
 		+ " )" + "SELECT * from ancestors ORDER BY level DESC", nativeQuery = true)
 	List<TreeNodeInfos> findAncestors(@Param("treeId") UUID treeId);
 
 	@Query(value = "WITH RECURSIVE children(id, parent_id, value) AS ("
-		+ " SELECT pkp.id, pkp.parent_id, pkp.value, 1 AS level " + " FROM tree_nodes pkp "
+		+ " SELECT pkp.id, pkp.parent_id, pkp.value, 1 AS level " + " FROM tree_node_infos pkp "
 		+ " WHERE pkp.id=:treeId " + " UNION ALL "
 		+ " SELECT parent.id, parent.parent_id, parent.value, child.level + 1 AS level "
-		+ " FROM tree_nodes parent " + " JOIN children child " + " ON child.id = parent.parent_id) "
+		+ " FROM tree_node_infos parent " + " JOIN children child " + " ON child.id = parent.parent_id) "
 		+ " SELECT * FROM children ", nativeQuery = true)
 	List<TreeNodeInfos> getAllChildrenWithParent(@Param("treeId") UUID treeId);
 
-	@Query(value = "select * from tree_nodes pkp where pkp.parent_id =:parent", nativeQuery = true)
+	@Query(value = "select * from tree_node_infos pkp where pkp.parent_id =:parent", nativeQuery = true)
 	List<TreeNodeInfos> getChildren(@Param("parent") UUID parent);
 }

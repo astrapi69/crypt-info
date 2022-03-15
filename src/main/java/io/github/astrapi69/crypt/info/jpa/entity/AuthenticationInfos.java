@@ -38,11 +38,19 @@ import io.github.astrapi69.crypt.info.enumtype.AuthenticationType;
 import io.github.astrapi69.data.enums.DatabasePrefix;
 import io.github.astrapi69.data.identifiable.Identifiable;
 import io.github.astrapi69.entity.uniqueable.UUIDEntity;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = AuthenticationInfos.TABLE_NAME)
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Getter
+@Setter
 @NoArgsConstructor
 @SuperBuilder
 public class AuthenticationInfos extends UUIDEntity

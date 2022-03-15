@@ -55,7 +55,7 @@ create table if not exists secret_values
     username text
 );
 
-create table if not exists tree_nodes
+create table if not exists tree_node_infos
 (
     id        uuid not null
         primary key,
@@ -64,7 +64,7 @@ create table if not exists tree_nodes
     value     text,
     parent_id uuid
         constraint fk_treeable_parent_id
-            references tree_nodes
+            references tree_node_infos
 );
 
 

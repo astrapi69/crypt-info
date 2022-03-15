@@ -26,7 +26,10 @@ package io.github.astrapi69.crypt.info.jpa.entity;
 
 import io.github.astrapi69.entity.uniqueable.UUIDEntity;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -37,7 +40,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = SecretValues.TABLE_NAME)
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@Getter
+@Setter
 @NoArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)

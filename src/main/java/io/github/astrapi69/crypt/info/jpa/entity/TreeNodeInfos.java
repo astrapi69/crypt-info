@@ -25,6 +25,7 @@
 package io.github.astrapi69.crypt.info.jpa.entity;
 
 import io.github.astrapi69.entity.treeable.TreeUUIDEntity;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,15 +37,16 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = TreeNodeInfos.TABLE_NAME)
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @SuperBuilder
 public class TreeNodeInfos extends TreeUUIDEntity<String, TreeNodeInfos>
 {
 
-	public static final String SINGULAR_ENTITY_NAME = "tree_node";
+	public static final String SINGULAR_ENTITY_NAME = "tree_node_info";
 	public static final String TABLE_NAME = SINGULAR_ENTITY_NAME + "s";
 	/** Serial Version UID */
 	private static final long serialVersionUID = 1L;

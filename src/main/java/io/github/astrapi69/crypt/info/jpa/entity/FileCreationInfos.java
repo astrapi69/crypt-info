@@ -29,7 +29,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -37,7 +40,10 @@ import io.github.astrapi69.entity.uniqueable.UUIDEntity;
 
 @Entity
 @Table(name = FileCreationInfos.TABLE_NAME)
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@Getter
+@Setter
 @NoArgsConstructor
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
