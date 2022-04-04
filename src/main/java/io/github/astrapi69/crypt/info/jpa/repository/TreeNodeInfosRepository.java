@@ -30,10 +30,11 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
-import io.github.astrapi69.crypt.info.jpa.entity.TreeNodeInfos;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import io.github.astrapi69.crypt.info.jpa.entity.TreeNodeInfos;
 
 public interface TreeNodeInfosRepository extends JpaRepository<TreeNodeInfos, UUID>
 {
@@ -54,6 +55,16 @@ public interface TreeNodeInfosRepository extends JpaRepository<TreeNodeInfos, UU
 
 	@Transactional
 	@Query("select entity from TreeNodeInfos entity where entity.value=:value "
+		+ " and entity.parent=:parent")
+	List<TreeNodeInfos> findByValueAndParent(@Param("value") String value,
+		@Param("parent") TreeNodeInfos parent);
+
+	@Transactional
+	@Query("select entity from TreeNodeInfos entity where entity.parent is null")
+	Optional<TreeNodeInfos> findRoot();
+
+	@Transactional
+	@Query("select entity from TreeNodeInfos entity where entity.value=:value "
 		+ " and entity.parent is null")
 	Optional<TreeNodeInfos> findRootByValue(@Param("value") String value);
 
@@ -67,16 +78,17 @@ public interface TreeNodeInfosRepository extends JpaRepository<TreeNodeInfos, UU
 		+ " SELECT pkp.id, pkp.parent_id, pkp.value, 1 AS level " + " FROM tree_node_infos pkp "
 		+ " WHERE pkp.id = :treeId " + " UNION ALL "
 		+ " SELECT parent.id, parent.parent_id, parent.value, child.level + 1 AS level "
-		+ " FROM tree_node_infos parent " + " JOIN ancestors child " + " ON parent.id = child.parent_id "
-		+ " )" + "SELECT * from ancestors ORDER BY level DESC", nativeQuery = true)
+		+ " FROM tree_node_infos parent " + " JOIN ancestors child "
+		+ " ON parent.id = child.parent_id " + " )"
+		+ "SELECT * from ancestors ORDER BY level DESC", nativeQuery = true)
 	List<TreeNodeInfos> findAncestors(@Param("treeId") UUID treeId);
 
 	@Query(value = "WITH RECURSIVE children(id, parent_id, value) AS ("
 		+ " SELECT pkp.id, pkp.parent_id, pkp.value, 1 AS level " + " FROM tree_node_infos pkp "
 		+ " WHERE pkp.id=:treeId " + " UNION ALL "
 		+ " SELECT parent.id, parent.parent_id, parent.value, child.level + 1 AS level "
-		+ " FROM tree_node_infos parent " + " JOIN children child " + " ON child.id = parent.parent_id) "
-		+ " SELECT * FROM children ", nativeQuery = true)
+		+ " FROM tree_node_infos parent " + " JOIN children child "
+		+ " ON child.id = parent.parent_id) " + " SELECT * FROM children ", nativeQuery = true)
 	List<TreeNodeInfos> getAllChildrenWithParent(@Param("treeId") UUID treeId);
 
 	@Query(value = "select * from tree_node_infos pkp where pkp.parent_id =:parent", nativeQuery = true)

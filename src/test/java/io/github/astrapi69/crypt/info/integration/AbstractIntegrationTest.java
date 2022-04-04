@@ -54,7 +54,7 @@ public abstract class AbstractIntegrationTest
 	 */
 	private static final String IMAGE_VERSION = "postgres:12.5";
 
-	private static final String DATABASE_NAME = "!!!CHANGE_DB_NAME!!!";
+	private static final String DATABASE_NAME = "cryptinfo";
 
 	@Autowired
 	protected TestEntityManager entityManager;

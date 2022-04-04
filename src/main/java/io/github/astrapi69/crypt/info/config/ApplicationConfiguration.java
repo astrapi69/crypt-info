@@ -31,6 +31,7 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -66,7 +67,7 @@ public class ApplicationConfiguration implements WebMvcConfigurer
 
 	public static final String VERSION_API_1 = "v1";
 	public static final String REST_VERSION = "/" + VERSION_API_1;
-
+	@Autowired
 	ApplicationProperties applicationProperties;
 
 	@SuppressWarnings("unused")
@@ -78,8 +79,10 @@ public class ApplicationConfiguration implements WebMvcConfigurer
 		SimpleModule module;
 		JavaTimeModule javaTimeModule;
 		SimpleAbstractTypeResolver resolver;
-
-		module = new SimpleModule(applicationProperties.getName(), Version.unknownVersion());
+		String name = applicationProperties.getName() == null
+			? "crypt-info"
+			: applicationProperties.getName();
+		module = new SimpleModule(name, Version.unknownVersion());
 		resolver = new SimpleAbstractTypeResolver();
 		module.setAbstractTypes(resolver);
 		objectMapper.registerModule(module);
