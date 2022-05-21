@@ -34,16 +34,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import io.github.astrapi69.crypt.info.enumtype.AuthenticationType;
-import io.github.astrapi69.data.enums.DatabasePrefix;
-import io.github.astrapi69.data.identifiable.Identifiable;
-import io.github.astrapi69.entity.uniqueable.UUIDEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import io.github.astrapi69.crypt.info.enumtype.AuthenticationType;
+import io.github.astrapi69.data.enums.DatabasePrefix;
+import io.github.astrapi69.data.identifiable.Identifiable;
+import io.github.astrapi69.entity.uniqueable.UUIDEntity;
 
 @Entity
 @Table(name = AuthenticationInfos.TABLE_NAME)
@@ -81,6 +81,10 @@ public class AuthenticationInfos extends UUIDEntity
 	/** The master password */
 	@Column(length = 1024)
 	String password;
+
+	@OneToOne
+	@JoinColumn(name = "private_key_id")
+	Resources privateKey;
 
 	/** The auth type */
 	@Enumerated(EnumType.STRING)
