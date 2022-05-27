@@ -16,6 +16,7 @@ create table if not exists flyway_schema_history
 
 create index if not exists flyway_schema_history_s_idx
     on flyway_schema_history (success);
+
 create table if not exists templates
 (
     id   uuid not null
@@ -65,6 +66,21 @@ create table if not exists tree_node_infos
     parent_id uuid
         constraint fk_treeable_parent_id
             references tree_node_infos
+);
+
+create table resources
+(
+    id           uuid not null,
+    checksum     varchar(255),
+    content      BYTEA,
+    content_type  varchar(64),
+    created      timestamp,
+    deleted_flag bool,
+    description  varchar(1024),
+    filename     varchar(1024),
+    filepath     varchar(4096),
+    filesize     bigint,
+    primary key (id)
 );
 
 

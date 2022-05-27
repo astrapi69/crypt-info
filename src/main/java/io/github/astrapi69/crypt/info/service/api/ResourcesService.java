@@ -1,7 +1,7 @@
 /**
  * The MIT License
  *
- * Copyright (C) 2020 Asterios Raptis
+ * Copyright (C) 2015 Asterios Raptis
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -22,26 +22,28 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package io.github.astrapi69.crypt.info.service;
+package io.github.astrapi69.crypt.info.service.api;
 
-import io.github.astrapi69.crypt.info.jpa.entity.AuthenticationInfos;
-import io.github.astrapi69.crypt.info.jpa.repository.AuthenticationInfosRepository;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import io.github.astrapi69.crypt.info.jpa.entity.Resources;
+import io.github.astrapi69.crypt.info.viewmodel.Resource;
+import io.github.astrapi69.crypt.info.viewmodel.UploadRequest;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-@AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AuthenticationInfosService
+
+public interface ResourcesService
 {
-	AuthenticationInfosRepository repository;
+	List<Resources> findByDescription(String description);
 
-	public AuthenticationInfos save(AuthenticationInfos entity)
-	{
-		return repository.save(entity);
-	}
+	List<Resources> findByFilename(String filename);
 
+	Resources getDefaultPlaceholder();
+
+	Resources getManPlaceholder();
+
+	Resources getWomanPlaceholder();
+
+	Resource download(String id);
+
+	Resource upload(UploadRequest uploadRequest);
 }
