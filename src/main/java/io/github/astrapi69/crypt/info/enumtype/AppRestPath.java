@@ -46,6 +46,10 @@ public enum AppRestPath
 	public static final String REST_VERSION = BaseRestPath.REST_VERSION_1;
 
 	public static final String REST_AUTHENTICATION_INFOS = "/authentication/infos";
+	public static final String REST_FILE_CREATION_INFOS = "/file/creation/infos";
+	public static final String REST_TREE_NODE_INFOS = "/tree/node/infos";
+	public static final String REST_RESOURCES = "/resources";
+	public static final String REST_SECRET_VALUES = "/secret/values";
 
 	String value;
 

@@ -43,13 +43,13 @@ import org.springframework.web.bind.annotation.RestController;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationInfosController
 {
-	AuthenticationInfosService templatesService;
+	AuthenticationInfosService service;
 	AuthenticationInfosMapper mapper;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public AuthenticationInfo newTemplate()
 	{
-		AuthenticationInfos entity = templatesService
+		AuthenticationInfos entity = service
 			.save(AuthenticationInfos.builder().password("secret").build());
 		return mapper.toDto(entity);
 	}
