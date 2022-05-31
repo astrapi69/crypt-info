@@ -64,27 +64,34 @@ public class AuthenticationInfos extends UUIDEntity
 
 	static final String COLUMN_NAME_APPLICATION_FILE = "application_file";
 	static final String COLUMN_NAME_KEY_FILE = "key_file";
+	static final String COLUMN_NAME_PRIVATE_KEY = "private_key";
 	static final String COLUMN_NAME_TYPE = "type";
-	static final String JOIN_COLUMN_FOREIGN_KEY_AUTHENTICATION_INFOS_FILE_CREATION_INFOS_ID = DatabasePrefix.FOREIGN_KEY_PREFIX
-		+ TABLE_NAME + DatabasePrefix.UNDERSCORE + AuthenticationInfos.SINGULAR_ENTITY_NAME
+	static final String JOIN_COLUMN_FOREIGN_KEY_AUTHENTICATION_INFOS_KEY_FILE_ID = DatabasePrefix.FOREIGN_KEY_PREFIX
+		+ TABLE_NAME + DatabasePrefix.UNDERSCORE + "KEY_FILE"
+		+ DatabasePrefix.UNDERSCORE + Identifiable.COLUMN_NAME_ID;
+	static final String JOIN_COLUMN_FOREIGN_KEY_AUTHENTICATION_INFOS_APPLICATION_FILE_ID = DatabasePrefix.FOREIGN_KEY_PREFIX
+		+ TABLE_NAME + DatabasePrefix.UNDERSCORE + "APPLICATION_FILE"
+		+ DatabasePrefix.UNDERSCORE + Identifiable.COLUMN_NAME_ID;
+	static final String JOIN_TABLE_FOREIGN_KEY_AUTHENTICATION_INFOS_RESOURCE_ID = DatabasePrefix.FOREIGN_KEY_PREFIX
+		+ TABLE_NAME + DatabasePrefix.UNDERSCORE + Resources.SINGULAR_ENTITY_NAME
 		+ DatabasePrefix.UNDERSCORE + Identifiable.COLUMN_NAME_ID;
 	/** The file name for the encrypted data file for the application */
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = COLUMN_NAME_APPLICATION_FILE, foreignKey = @ForeignKey(name = JOIN_COLUMN_FOREIGN_KEY_AUTHENTICATION_INFOS_FILE_CREATION_INFOS_ID))
+	@JoinColumn(name = COLUMN_NAME_APPLICATION_FILE, foreignKey = @ForeignKey(name = JOIN_COLUMN_FOREIGN_KEY_AUTHENTICATION_INFOS_APPLICATION_FILE_ID))
 	FileCreationInfos applicationFile;
 
 	/** The file name for the key file */
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = COLUMN_NAME_KEY_FILE, foreignKey = @ForeignKey(name = JOIN_COLUMN_FOREIGN_KEY_AUTHENTICATION_INFOS_FILE_CREATION_INFOS_ID))
+	@JoinColumn(name = COLUMN_NAME_KEY_FILE, foreignKey = @ForeignKey(name = JOIN_COLUMN_FOREIGN_KEY_AUTHENTICATION_INFOS_KEY_FILE_ID))
 	FileCreationInfos keyFile;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = COLUMN_NAME_PRIVATE_KEY, foreignKey = @ForeignKey(name = JOIN_TABLE_FOREIGN_KEY_AUTHENTICATION_INFOS_RESOURCE_ID))
+	Resources privateKey;
 
 	/** The master password */
 	@Column(length = 1024)
 	String password;
-
-	@OneToOne
-	@JoinColumn(name = "private_key_id")
-	Resources privateKey;
 
 	/** The auth type */
 	@Enumerated(EnumType.STRING)

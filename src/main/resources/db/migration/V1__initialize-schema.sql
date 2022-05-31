@@ -68,7 +68,7 @@ create table if not exists tree_node_infos
             references tree_node_infos
 );
 
-create table resources
+create table if not exists resources
 (
     id           uuid not null,
     checksum     varchar(255),
