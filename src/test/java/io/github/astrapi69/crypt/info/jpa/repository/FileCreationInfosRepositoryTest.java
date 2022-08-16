@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+import io.github.astrapi69.crypt.info.mapper.FileCreationInfosMapper;
+import io.github.astrapi69.crypt.info.viewmodel.FileCreationInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,18 +18,26 @@ class FileCreationInfosRepositoryTest extends AbstractIntegrationTest
 	@Autowired
 	FileCreationInfosRepository repository;
 
-
 	@Test
 	public void testSave()
 	{
+		FileCreationInfosMapper mapper;
+		FileCreationInfos actual;
+		FileCreationInfos expected;
 		FileCreationInfos entity = FileCreationInfos.builder().filePath("/home/user/.config/")
 			.fileName("secret.mcdb").build();
 
-		FileCreationInfos saved = repository.save(entity);
-		assertNotNull(saved);
+		expected= repository.save(entity);
+		assertNotNull(expected);
 
 		AtomicReference<FileCreationInfos> atomicReference = new AtomicReference<>();
-		repository.findById(saved.getId()).ifPresent(ent -> atomicReference.set(ent));
-		assertEquals(saved, atomicReference.get());
+		repository.findById(expected.getId()).ifPresent(ent -> atomicReference.set(ent));
+		actual = atomicReference.get();
+		assertEquals(expected, actual);
+		mapper = new FileCreationInfosMapper();
+		FileCreationInfo dtoActual = mapper.map(actual, FileCreationInfo.class);
+		FileCreationInfo dtoExpected = FileCreationInfo.builder().filePath("/home/user/.config/")
+			.fileName("secret.mcdb").build();
+		assertEquals(dtoExpected, dtoActual);
 	}
 }
